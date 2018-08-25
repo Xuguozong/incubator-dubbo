@@ -21,6 +21,7 @@ package org.apache.dubbo.config;
  *
  * @export
  */
+// 服务消费者缺省值配置类
 public class ConsumerConfig extends AbstractReferenceConfig {
 
     private static final long serialVersionUID = 2827274711143680600L;

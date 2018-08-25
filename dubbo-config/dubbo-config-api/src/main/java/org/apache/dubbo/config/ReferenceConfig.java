@@ -61,6 +61,7 @@ import static org.apache.dubbo.common.utils.NetUtils.isInvalidLocalHost;
  *
  * @export
  */
+// 服务消费者引用服务配置类
 public class ReferenceConfig<T> extends AbstractReferenceConfig {
 
     private static final long serialVersionUID = -5864351140409987595L;
@@ -157,10 +158,17 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
         return urls;
     }
 
+    // 获取引用服务
+    // 1.进一步初始化ReferenceConfig对象
+    // 2.校验ReferenceConfig对象的配置项
+    // 3.使用ReferenceConfig对象，生成Dubbo URL对象数组
+    // 4.使用Dubbo URL对象，应用服务
     public synchronized T get() {
+        // 已销毁，获取不了
         if (destroyed) {
             throw new IllegalStateException("Already destroyed!");
         }
+        // 初始化
         if (ref == null) {
             init();
         }
@@ -209,9 +217,14 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
             }
             checkInterfaceAndMethods(interfaceClass, methods);
         }
+
+        // 直连提供者，参见： https://dubbo.gitbooks.io/dubbo-user-book/demos/explicit-target.html
+        // 直连提供者，第一优先级：通过-D参数指定
         String resolve = System.getProperty(interfaceName);
         String resolveFile = null;
+        // 直连提供者，第二优先级：通过文件映射
         if (resolve == null || resolve.length() == 0) {
+            // 默认先加载：${user.home}/dubbo-resolve.properties
             resolveFile = System.getProperty("dubbo.resolve.file");
             if (resolveFile == null || resolveFile.length() == 0) {
                 File userResolveFile = new File(new File(System.getProperty("user.home")), "dubbo-resolve.properties");
@@ -219,6 +232,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                     resolveFile = userResolveFile.getAbsolutePath();
                 }
             }
+            // 若存在就读取
             if (resolveFile != null && resolveFile.length() > 0) {
                 Properties properties = new Properties();
                 FileInputStream fis = null;
@@ -237,6 +251,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                 resolve = properties.getProperty(interfaceName);
             }
         }
+        // 设置直连提供者的url
         if (resolve != null && resolve.length() > 0) {
             url = resolve;
             if (logger.isWarnEnabled()) {
@@ -323,6 +338,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
             }
         }
 
+        // 以系统环境变量DUBBO_IP_TO_REGISTRY作为服务注册地址
         String hostToRegistry = ConfigUtils.getSystemProperty(Constants.DUBBO_IP_TO_REGISTRY);
         if (hostToRegistry == null || hostToRegistry.length() == 0) {
             hostToRegistry = NetUtils.getLocalHost();

@@ -27,6 +27,7 @@ import org.apache.dubbo.rpc.support.ProtocolUtils;
  * @export
  * @see org.apache.dubbo.config.ReferenceConfig
  */
+// 抽象引用配置类
 public abstract class AbstractReferenceConfig extends AbstractInterfaceConfig {
 
     private static final long serialVersionUID = -2786526984373031126L;
