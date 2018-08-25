@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @export
  */
+// 抽象服务配置类
 public abstract class AbstractServiceConfig extends AbstractInterfaceConfig {
 
     private static final long serialVersionUID = 1L;
