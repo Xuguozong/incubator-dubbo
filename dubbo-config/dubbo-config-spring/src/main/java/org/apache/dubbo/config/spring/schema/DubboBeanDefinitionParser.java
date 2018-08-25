@@ -59,11 +59,13 @@ import java.util.regex.Pattern;
  *
  * @export
  */
+// Dubbo Bean的定义解析器
 public class DubboBeanDefinitionParser implements BeanDefinitionParser {
 
     private static final Logger logger = LoggerFactory.getLogger(DubboBeanDefinitionParser.class);
     private static final Pattern GROUP_AND_VERION = Pattern.compile("^[\\-.0-9_a-zA-Z]+(\\:[\\-.0-9_a-zA-Z]+)?$");
     private final Class<?> beanClass;
+    // 是否需要bean的id属性(不存在时自动生成)
     private final boolean required;
 
     public DubboBeanDefinitionParser(Class<?> beanClass, boolean required) {
@@ -72,9 +74,11 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
     }
 
     @SuppressWarnings("unchecked")
+    // 解析XML元素
     private static BeanDefinition parse(Element element, ParserContext parserContext, Class<?> beanClass, boolean required) {
         RootBeanDefinition beanDefinition = new RootBeanDefinition();
         beanDefinition.setBeanClass(beanClass);
+        // 引用缺省是延迟初始化的
         beanDefinition.setLazyInit(false);
         String id = element.getAttribute("id");
         if ((id == null || id.length() == 0) && required) {
@@ -99,6 +103,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
             if (parserContext.getRegistry().containsBeanDefinition(id)) {
                 throw new IllegalStateException("Duplicate spring bean id " + id);
             }
+            // 添加到spring的注册表
             parserContext.getRegistry().registerBeanDefinition(id, beanDefinition);
             beanDefinition.getPropertyValues().addPropertyValue("id", id);
         }
@@ -257,6 +262,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
     }
 
     @SuppressWarnings("unchecked")
+    // 解析多指向的情况，例如多注册中心，多协议等等
     private static void parseMultiRef(String property, String value, RootBeanDefinition beanDefinition,
                                       ParserContext parserContext) {
         String[] values = value.split("\\s*[,]+\\s*");
@@ -273,6 +279,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
         beanDefinition.getPropertyValues().addPropertyValue(property, list);
     }
 
+    // 解析内嵌的指向的子XML元素
     private static void parseNested(Element element, ParserContext parserContext, Class<?> beanClass, boolean required, String tag, String property, String ref, BeanDefinition beanDefinition) {
         NodeList nodeList = element.getChildNodes();
         if (nodeList != null && nodeList.getLength() > 0) {
@@ -299,6 +306,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
         }
     }
 
+    // 解析 Service Bean 对象的属性
     private static void parseProperties(NodeList nodeList, RootBeanDefinition beanDefinition) {
         if (nodeList != null && nodeList.getLength() > 0) {
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -352,6 +360,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
     }
 
     @SuppressWarnings("unchecked")
+    // 解析<dubbo:method />标签
     private static void parseMethods(String id, NodeList nodeList, RootBeanDefinition beanDefinition,
                                      ParserContext parserContext) {
         if (nodeList != null && nodeList.getLength() > 0) {
@@ -384,6 +393,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
     }
 
     @SuppressWarnings("unchecked")
+    // 解析<dubbo:argument />标签
     private static void parseArguments(String id, NodeList nodeList, RootBeanDefinition beanDefinition,
                                        ParserContext parserContext) {
         if (nodeList != null && nodeList.getLength() > 0) {

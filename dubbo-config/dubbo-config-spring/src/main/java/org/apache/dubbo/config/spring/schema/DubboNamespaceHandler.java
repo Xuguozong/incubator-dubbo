@@ -33,6 +33,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  *
  * @export
  */
+// Dubbo的XML namespace的处理器
 public class DubboNamespaceHandler extends NamespaceHandlerSupport {
 
     static {
