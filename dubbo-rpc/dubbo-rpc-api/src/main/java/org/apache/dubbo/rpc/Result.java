@@ -27,6 +27,7 @@ import java.util.Map;
  * @see org.apache.dubbo.rpc.Invoker#invoke(Invocation)
  * @see org.apache.dubbo.rpc.RpcResult
  */
+// 会话域，持有调用过程的返回值、异常等
 public interface Result extends Serializable {
 
     /**

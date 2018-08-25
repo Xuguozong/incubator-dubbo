@@ -1,0 +1,2 @@
+1.exchange信息交换层， 封装请求相应模式， 同步转异步， 以Request, Response为中心， 扩展接口为 ExchangeChannel, ExchageClient, ExchangeServer
+2.transport网络传输层， 抽象mina和netty为统一接口，以Message为中心，扩展接口为Channel, Transport, Client, Server, Codec

@@ -1,0 +1,2 @@
+protocol远程调用层,封装RPC调用，以Invocation, Result为中心，扩展接口为Protocol, Invoker, Exporter
+在RPC中，Protocol是核心层，只要有Protocol+Invoker+Exporter就可以完成非透明（缺少Proxy层）的RPC调用，然后在Invoker的主过程上设置filter拦截点

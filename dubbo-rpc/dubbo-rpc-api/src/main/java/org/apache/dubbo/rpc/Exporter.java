@@ -23,6 +23,8 @@ package org.apache.dubbo.rpc;
  * @see org.apache.dubbo.rpc.ExporterListener
  * @see org.apache.dubbo.rpc.protocol.AbstractExporter
  */
+// Invoker暴露服务在Protocol上的对象
+// Dubbo处理暴露服务的关键就在Invoker转换到Exporter的过程
 public interface Exporter<T> {
 
     /**

@@ -40,6 +40,7 @@ public interface Filter {
      * @throws RpcException
      * @see org.apache.dubbo.rpc.Invoker#invoke(Invocation)
      */
+    // 执行invoker的过滤逻辑
     Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException;
 
 }

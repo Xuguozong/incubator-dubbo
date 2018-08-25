@@ -23,6 +23,7 @@ import org.apache.dubbo.common.extension.SPI;
 /**
  * Protocol. (API/SPI, Singleton, ThreadSafe)
  */
+// 服务域，Invoker暴露和引用的主功能入口，负责Invoker的生命周期管理
 @SPI("dubbo")
 public interface Protocol {
 
@@ -46,6 +47,7 @@ public interface Protocol {
      * @return exporter reference for exported service, useful for unexport the service later
      * @throws RpcException thrown when error occurs during export the service, for example: port is occupied
      */
+    // 暴露远程服务
     @Adaptive
     <T> Exporter<T> export(Invoker<T> invoker) throws RpcException;
 
@@ -64,6 +66,7 @@ public interface Protocol {
      * @return invoker service's local proxy
      * @throws RpcException when there's any error while connecting to the service provider
      */
+    // 引用远程服务
     @Adaptive
     <T> Invoker<T> refer(Class<T> type, URL url) throws RpcException;
 
@@ -73,6 +76,7 @@ public interface Protocol {
      * 2. Release all occupied resources, for example: connection, port, etc. <br>
      * 3. Protocol can continue to export and refer new service even after it's destroyed.
      */
+    // 释放协议
     void destroy();
 
 }
