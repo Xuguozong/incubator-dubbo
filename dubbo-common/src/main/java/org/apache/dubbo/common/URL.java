@@ -68,6 +68,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see java.net.URL
  * @see java.net.URI
  */
+// 所有的配置都将转换成此dubbo URL表示
+// 由服务提供方生成，经注册中心传递给消费方，各属性对应URL参数,由URL#buildString(...)方法生成
 public /**final**/ class URL implements Serializable {
 
     private static final long serialVersionUID = -1985165475234910535L;
@@ -84,8 +86,10 @@ public /**final**/ class URL implements Serializable {
     // by default, port to registry
     private final int port;
 
+    // 路径（服务名）
     private final String path;
 
+    // 参数集合
     private final Map<String, String> parameters;
 
     // ==== cache ====
