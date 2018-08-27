@@ -29,6 +29,7 @@ public interface ExtensionFactory {
      * @param name object name.
      * @return object instance.
      */
+    // 不仅仅可以获取扩展对象，也可以获取Spring Bean 对象
     <T> T getExtension(Class<T> type, String name);
 
 }

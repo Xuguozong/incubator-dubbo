@@ -42,6 +42,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
+// 自动激活条件的标记
 public @interface Activate {
     /**
      * Activate the current extension when one of the groups matches. The group passed into
