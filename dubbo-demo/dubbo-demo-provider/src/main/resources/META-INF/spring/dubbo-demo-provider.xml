@@ -35,6 +35,11 @@
     <bean id="demoService" class="org.apache.dubbo.demo.provider.DemoServiceImpl"/>
 
     <!-- declare the service interface to be exported -->
-    <dubbo:service interface="org.apache.dubbo.demo.DemoService" ref="demoService"/>
+    <dubbo:service interface="org.apache.dubbo.demo.DemoService" ref="demoService">
+        <!--指定线程池相关参数-->
+        <dubbo:parameter key="threadname" value="demoService"/>
+        <dubbo:parameter key="threads" value="10"/>
+        <dubbo:parameter key="queues" value="10"/>
+    </dubbo:service>
 
 </beans>

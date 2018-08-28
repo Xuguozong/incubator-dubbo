@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  * Creates a thread pool that creates new threads as needed until limits reaches. This thread pool will not shrink
  * automatically.
  */
+// 可伸缩线程池，池中线程数只增长不减少
 public class LimitedThreadPool implements ThreadPool {
 
     @Override

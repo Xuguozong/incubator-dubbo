@@ -36,6 +36,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * Abort Policy.
  * Log warn info when abort.
  */
+// 拒绝策略实现类，打印Jstack，分析线程状态
 public class AbortPolicyWithReport extends ThreadPoolExecutor.AbortPolicy {
 
     protected static final Logger logger = LoggerFactory.getLogger(AbortPolicyWithReport.class);
