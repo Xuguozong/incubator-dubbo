@@ -129,6 +129,14 @@ public class UrlUtils {
         return u;
     }
 
+    /**
+     * 解析单个URL，将defaults里的参数合并到address中
+     * 逻辑:
+     *     若address里有不存在的属性，从defaults里获取并添加到address中
+     * @param address
+     * @param defaults
+     * @return 多个分组
+     */
     public static List<URL> parseURLs(String address, Map<String, String> defaults) {
         if (address == null || address.length() == 0) {
             return null;

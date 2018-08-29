@@ -27,14 +27,22 @@ import java.util.Map;
  */
 class InjvmExporter<T> extends AbstractExporter<T> {
 
+    // 服务键， serviceKey
     private final String key;
 
+    /**
+     * Exporter 集合
+     * key: 服务键
+     *
+     * 该值实际就是 {@link org.apache.dubbo.rpc.protocol.AbstractProtocol#exporterMap}
+     */
     private final Map<String, Exporter<?>> exporterMap;
 
     InjvmExporter(Invoker<T> invoker, String key, Map<String, Exporter<?>> exporterMap) {
         super(invoker);
         this.key = key;
         this.exporterMap = exporterMap;
+        // 将自己添加到Exporter集合中
         exporterMap.put(key, this);
     }
 

@@ -32,11 +32,16 @@ import java.util.Map;
 /**
  * InjvmProtocol
  */
+// Injvm协议实现类
 public class InjvmProtocol extends AbstractProtocol implements Protocol {
 
+    // 协议名
     public static final String NAME = Constants.LOCAL_PROTOCOL;
 
+    // 默认端口
     public static final int DEFAULT_PORT = 0;
+
+    // 单例，在Dubbo SPI中，被初始化， 有且仅有一次
     private static InjvmProtocol INSTANCE;
 
     public InjvmProtocol() {
