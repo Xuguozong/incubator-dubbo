@@ -206,7 +206,13 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
         return registryList;
     }
 
+    /**
+     * 加载监控中心
+     * @param registryURL
+     * @return
+     */
     protected URL loadMonitor(URL registryURL) {
+        // 从 属性配置 中加载配置到
         if (monitor == null) {
             String monitorAddress = ConfigUtils.getProperty("dubbo.monitor.address");
             String monitorProtocol = ConfigUtils.getProperty("dubbo.monitor.protocol");
@@ -245,16 +251,19 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
         if (sysaddress != null && sysaddress.length() > 0) {
             address = sysaddress;
         }
+        // 直连监控中心服务器地址
         if (ConfigUtils.isNotEmpty(address)) {
-            if (!map.containsKey(Constants.PROTOCOL_KEY)) {
+            if (!map.containsKey(Constants.PROTOCOL_KEY)) { // 默认dubbo协议
                 if (ExtensionLoader.getExtensionLoader(MonitorFactory.class).hasExtension("logstat")) {
                     map.put(Constants.PROTOCOL_KEY, "logstat");
                 } else {
                     map.put(Constants.PROTOCOL_KEY, "dubbo");
                 }
             }
+            // 解析地址，创建Dubbo URL 对象
             return UrlUtils.parseURL(address, map);
         } else if (Constants.REGISTRY_PROTOCOL.equals(monitor.getProtocol()) && registryURL != null) {
+            // 从注册中心发现监控中心地址
             return registryURL.setProtocol("dubbo").addParameter(Constants.PROTOCOL_KEY, "registry").addParameterAndEncoded(Constants.REFER_KEY, StringUtils.toQueryString(map));
         }
         return null;
