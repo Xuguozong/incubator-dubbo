@@ -29,7 +29,9 @@ import org.I0Itec.zkclient.exception.ZkNodeExistsException;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 
 import java.util.List;
-
+/**
+ * 基于ZKClient 的 Zookeeper客户端实现类
+ */
 public class ZkclientZookeeperClient extends AbstractZookeeperClient<IZkChildListener> {
 
     private final ZkClientWrapper client;
